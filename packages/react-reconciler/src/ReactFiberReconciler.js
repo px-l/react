@@ -153,8 +153,8 @@ function scheduleRootUpdate(
   }
 
   flushPassiveEffects();
-  enqueueUpdate(current, update);
-  scheduleWork(current, expirationTime);
+  enqueueUpdate(current, update);//加入到fiber对象的updatequeue上
+  scheduleWork(current, expirationTime);//开始进行调度（任务优先级）
 
   return expirationTime;
 }

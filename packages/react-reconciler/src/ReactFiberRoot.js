@@ -117,30 +117,33 @@ export function createFiberRoot(
   let root;
   if (enableSchedulerTracing) {
     root = ({
-      current: uninitializedFiber,
-      containerInfo: containerInfo,
-      pendingChildren: null,
-
+      current: uninitializedFiber,//当前fiber，定点fiber
+      containerInfo: containerInfo,//挂载节点，render第二个参数
+      pendingChildren: null,//持久更新时会用到
+      //优先级判断用
       earliestPendingTime: NoWork,
-      latestPendingTime: NoWork,
+      latestPendingTime: NoWork,//最老和新的提交时被挂起的任务
+      
       earliestSuspendedTime: NoWork,
-      latestSuspendedTime: NoWork,
-      latestPingedTime: NoWork,
+      latestSuspendedTime: NoWork,//最老和最新的不确定被挂起优先级
+      
+      latestPingedTime: NoWork,//最新一个通过promise被resove并且可以重新尝试的优先级
 
       pingCache: null,
 
-      didError: false,
+      didError: false,//render是否出现错误
 
-      pendingCommitExpirationTime: NoWork,
-      finishedWork: null,
-      timeoutHandle: noTimeout,
-      context: null,
+      pendingCommitExpirationTime: NoWork,//正在等待提交的任务的‘ExpirationTime’
+      finishedWork: null,//一次更新中完成了的更新任务；fiber
+      timeoutHandle: noTimeout,//suspense
+      context: null,//只有主动调用rendersubtreeintocontainer时才会用
       pendingContext: null,
-      hydrate,
-      nextExpirationTimeToWorkOn: NoWork,
-      expirationTime: NoWork,
+      hydrate,//是否要合并dom
+      nextExpirationTimeToWorkOn: NoWork,//这次更新的是哪个优先级的任务，应用更新过程中会遍历到每个节点，如果节点有更新他会有自己的ExpirationTime，然后对比ExpirationTime
+
+      expirationTime: NoWork,//用在调度的过程中，大部分时候同上
       firstBatch: null,
-      nextScheduledRoot: null,
+      nextScheduledRoot: null,//单向链表的属性吗，串联不同的root
 
       interactionThreadID: unstable_getThreadID(),
       memoizedInteractions: new Set(),

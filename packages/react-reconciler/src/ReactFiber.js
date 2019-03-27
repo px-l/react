@@ -223,39 +223,39 @@ function FiberNode(
   mode: TypeOfMode,
 ) {
   // Instance
-  this.tag = tag;
-  this.key = key;
-  this.elementType = null;
-  this.type = null;
-  this.stateNode = null;
+  this.tag = tag;//标记组件类型
+  this.key = key;//key
+  this.elementType = null;//element的elementType
+  this.type = null;//记录lazy组件resolved之后返回的组件类型
+  this.stateNode = null;//节点对应的实例
 
   // Fiber
-  this.return = null;
-  this.child = null;
-  this.sibling = null;
+  this.return = null;//返回父节点
+  this.child = null;//指向子节点
+  this.sibling = null;//串联兄弟节点
   this.index = 0;
 
   this.ref = null;
 
-  this.pendingProps = pendingProps;
-  this.memoizedProps = null;
-  this.updateQueue = null;
-  this.memoizedState = null;
+  this.pendingProps = pendingProps;//更新时新产生的props
+  this.memoizedProps = null;//上次更新之后的props
+  this.updateQueue = null;//节点创建的更新
+  this.memoizedState = null;//上一次渲染的state
   this.contextDependencies = null;
 
-  this.mode = mode;
+  this.mode = mode;//concurrentmode或继承父节点mode
 
-  // Effects
+  // Effects sideeffect
   this.effectTag = NoEffect;
   this.nextEffect = null;
 
   this.firstEffect = null;
   this.lastEffect = null;
 
-  this.expirationTime = NoWork;
-  this.childExpirationTime = NoWork;
+  this.expirationTime = NoWork;//当前如产生更新，更新的过期时间
+  this.childExpirationTime = NoWork;//子节点如产生更新，更新的过期时间
 
-  this.alternate = null;
+  this.alternate = null;//current和workinprogress的对应关系
 
   if (enableProfilerTimer) {
     // Note: The following is done to avoid a v8 performance cliff.
