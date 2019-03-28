@@ -106,18 +106,18 @@ import invariant from 'shared/invariant';
 import warningWithoutStack from 'shared/warningWithoutStack';
 
 export type Update<State> = {
-  expirationTime: ExpirationTime,
+  expirationTime: ExpirationTime,//更新的过期时间
 
-  tag: 0 | 1 | 2 | 3,
-  payload: any,
+  tag: 0 | 1 | 2 | 3,//判断更新类型，update，replace，force，capture
+  payload: any,//更新内容，初始化时整个app，更新时setstate第一个参数
   callback: (() => mixed) | null,
 
-  next: Update<State> | null,
-  nextEffect: Update<State> | null,
+  next: Update<State> | null,//指向updatequeue的下一个更新；
+  nextEffect: Update<State> | null,//指向下一个side effect
 };
 
 export type UpdateQueue<State> = {
-  baseState: State,
+  baseState: State,//上次更新之后的state
 
   firstUpdate: Update<State> | null,
   lastUpdate: Update<State> | null,
